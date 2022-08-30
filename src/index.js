@@ -1,11 +1,12 @@
 import './styles.css'
-import { createStore, applyMiddleware } from 'redux'
+import { createStore, applyMiddleware, compose } from 'redux'
 // import { createStore } from './createStore'
 import { rootReducer } from './redux/rootReducer'
 // import { INCREMENT, DECREMENT } from './redux/types'
 import { asyncIncrement, decrement, increment, changeTheme } from './redux/actions'
 import thunk from 'redux-thunk'
 import logger from 'redux-logger'
+import { composeWithDevTools } from '@redux-devtools/extension'
 
 const counter = document.getElementById('counter')
 const addBtn = document.getElementById('add')
@@ -23,10 +24,22 @@ const themeBtn = document.getElementById('theme')
 //   }
 // }
 
+// add redux-devtools 1
 const store = createStore(
    rootReducer,
-   applyMiddleware(thunk, logger)
+   composeWithDevTools(
+    applyMiddleware(thunk, logger),
+  )
 )
+
+//add redux-devtools 2
+// const store = createStore(
+//   rootReducer,
+//   compose(
+//     applyMiddleware(thunk, logger),
+//     window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+//   )
+// )
 
 // window.store = store
 
