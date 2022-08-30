@@ -44,16 +44,9 @@ asyncBtn.addEventListener('click', () => {
   store.dispatch(asyncIncrement())
 })
 
-// store.subscribe(() => console.log(store.getState()))
-store.subscribe(() => {
-  const state = store.getState()
-  // console.log('state', state);
 
-  counter.textContent = state.counter
-  document.body.className = state.theme.value
-})
 
-store.dispatch( {type: 'INIT_APPLICATION'})
+
 
 themeBtn.addEventListener('click', () => {
   // document.body.classList.toggle('dark')
@@ -62,6 +55,21 @@ themeBtn.addEventListener('click', () => {
     : 'light'
   store.dispatch(changeTheme(newTheme))
 })
+
+// store.subscribe(() => console.log(store.getState()))
+store.subscribe(() => {
+  const state = store.getState()
+  // console.log('state', state);
+
+  counter.textContent = state.counter
+  document.body.className = state.theme.value;
+  [addBtn, subBtn, asyncBtn, themeBtn].forEach(btn => {
+    btn.disabled = state.theme.disabled
+  })
+})
+
+store.dispatch( {type: 'INIT_APPLICATION'})
+
 
 
 
